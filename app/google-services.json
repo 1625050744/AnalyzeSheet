@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1088671987768",
+    "firebase_url": "https://enpit2-dd0b6.firebaseio.com",
+    "project_id": "enpit2-dd0b6",
+    "storage_bucket": "enpit2-dd0b6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1088671987768:android:e6d533375585a0b9",
+        "android_client_info": {
+          "package_name": "com.example.enpit_p22.analyzesheet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1088671987768-nft9m9f6ovujblang8eq88khonscs8cd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB6vOUUOt77AjzygZcB5WgXqer858R80UY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">AnalyzeSheet</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_login">Sign in</string>
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">"Password "</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email completions."</string>
+    <string name="signup">SIGN UP</string>
+    <string name="title_activity_signup">Signup</string>
+
+    <!--ここからを追加-->
+    <string name="ans__yes">はい</string>
+    <string name="ans_no">いいえ</string>
+    <string name="Q1text">・お子さんは週に何回外出しますか？</string>
+    <string name="Q2text">・最後にお子さんと会話をしたのはいつ頃ですか？</string>
+    <string name="Q3text">・1日に何回お子さんと話しますか？</string>
+    <string name="Q1hint">(例) ５</string>
+    <string name="Q2hint">(例) 23</string>
+    <string name="Q3hint">(例) 3</string>
+    <string name="Q4text">・お子さんと話すことに苦痛を感じますか?</string>
+    <string name="Q5text">・お子さんと話すことに苦痛を感じますか?</string>
+    <string name="Q6text">・お子さんが現在の状況になった経緯を知っていますか？</string>
+    <string name="Q6edit_detail_text">詳細記述欄(200文字以内)</string>
+    <string name="Q7text">・現在の生活状況はどのようなものですか？</string>
+</resources>
