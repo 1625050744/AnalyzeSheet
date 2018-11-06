@@ -34,7 +34,7 @@
                         android:layout_height="wrap_content"
                         android:inputType="number"
                         android:ems="10"
-                        android:id="@+id/Q1Edit_num"
+                        android:id="@+id/Q1_edit_num"
                         android:textSize="12sp"
                         android:hint="(例)  ５"
                         android:gravity="center_vertical|center_horizontal" android:singleLine="true"
@@ -126,12 +126,12 @@
                 <RadioButton
                         android:text="@string/ans__yes"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" android:id="@+id/Q4yes_buttom"
+                        android:layout_height="wrap_content" android:id="@+id/Q4_yesButtom"
                         android:layout_weight="1" android:checked="false"/>
                 <RadioButton
                         android:text="@string/ans_no"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" android:id="@+id/Q4no_buttom"
+                        android:layout_height="wrap_content" android:id="@+id/Q4_noButtom"
                         android:layout_weight="1" android:checked="false"/>
             </RadioGroup>
             <TextView
@@ -183,7 +183,7 @@
             <EditText
                     android:layout_width="match_parent"
                     android:ems="10"
-                    android:id="@+id/Q6_Edit_detail" android:layout_marginLeft="40dp"
+                    android:id="@+id/Q6_edit_detail" android:layout_marginLeft="40dp"
                     android:layout_marginBottom="40dp" android:lines="7"
                     android:background="@drawable/textview_border" android:lineHeight="20dp"
                     android:inputType="textMultiLine" android:minLines="1" android:maxLength="200"
@@ -204,7 +204,7 @@
             <EditText
                     android:layout_width="match_parent"
                     android:ems="10"
-                    android:id="@+id/Q7_Edit" android:layout_marginLeft="40dp"
+                    android:id="@+id/Q7_edit_text" android:layout_marginLeft="40dp"
                     android:layout_marginBottom="40dp" android:lines="7"
                     android:background="@drawable/textview_border" android:lineHeight="20dp"
                     android:inputType="textMultiLine" android:minLines="1" android:maxLength="200"

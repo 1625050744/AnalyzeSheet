@@ -7,11 +7,14 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_own_analysis.*
 import kotlinx.android.synthetic.main.content_login.*
 import org.jetbrains.anko.startActivity
 
 class LoginActivity : AppCompatActivity() {
+
+    var mDatabase = FirebaseDatabase.getInstance().getReference()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +34,7 @@ class LoginActivity : AppCompatActivity() {
 
                     //else if scusessful
                     Log.d("Main", "Successfully login user with uid: ${it.result.user.uid}")
+
                     startActivity<OwnAnalysisActivity>()
                 }
                 .addOnFailureListener{
@@ -60,5 +64,7 @@ class LoginActivity : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
     }
+
+
 
 }
