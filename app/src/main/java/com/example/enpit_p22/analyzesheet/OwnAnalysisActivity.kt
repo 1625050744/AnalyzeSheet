@@ -3,6 +3,7 @@ package com.example.enpit_p22.analyzesheet
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -11,10 +12,7 @@ import android.widget.AdapterView
 import android.widget.Spinner
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.ChildEventListener
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_own_analysis.*
 import kotlinx.android.synthetic.main.content_own_analysis.*
 
@@ -29,7 +27,7 @@ class OwnAnalysisActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
-
+        fetchuser()
         Q2_spinner.onItemSelectedListener =
                 object : AdapterView.OnItemSelectedListener{
 
@@ -156,6 +154,79 @@ class OwnAnalysisActivity : AppCompatActivity() {
 
         })
 
+    }
+    private fun fetchuser(){
+        val ref = FirebaseDatabase.getInstance().getReference()?.child("/AnalyzeSheet")
+        ref.addListenerForSingleValueEvent(object :ValueEventListener{
+            override fun onDataChange(p0: DataSnapshot) {
+                Log.d("Main","実行")
+                for(data in p0.children)
+                {
+                    val userdata = data.getValue<Quetion>(Quetion::class.java)
+                    val user = userdata?.let { it } ?:continue
+                    if(user.userId.toString() == FirebaseAuth.getInstance().uid.toString()){
+                        Log.d("Main","jikko")
+                        Q1_edit_num.setText(user.q1)
+                        Q2_edit_num.setText(user.q2_1)
+                        Q2_spinner.setSelection(user.q2_2!!)
+                        Q3_edit_num.setText(user.q3)
+                        when {
+                            user.q4 == 0 -> {
+                                Q4_yesButtom.isChecked = false
+                                Q4_noButtom.isChecked = true
+                            }
+                            user.q4 == 1 -> {
+                                Q4_yesButtom.isChecked = true
+                                Q4_noButtom.isChecked = false
+                            }
+                            else -> {
+                                Q4_yesButtom.isChecked = false
+                                Q4_noButtom.isChecked = false
+                            }
+                        }
+
+                        when {
+                                user.q5 == 0 -> {
+                                Q5_yesButtom.isChecked = false
+                                Q5_noButtom.isChecked = true
+                            }
+                            user.q5 == 1 -> {
+                                Q5_yesButtom.isChecked = true
+                                Q5_noButtom.isChecked = false
+                            }
+                            else -> {
+                                Q5_yesButtom.isChecked = false
+                                Q5_noButtom.isChecked = false
+                            }
+                        }
+
+                        when {
+                            user.q6_1 == 0 -> {
+                                Q6_yesButtom.isChecked = false
+                                Q6_noButtom.isChecked = true
+                            }
+                            user.q6_1 == 1 -> {
+                                Q6_yesButtom.isChecked = true
+                                Q6_noButtom.isChecked = false
+                            }
+                            else -> {
+                                Q6_yesButtom.isChecked = false
+                                Q6_noButtom.isChecked = false
+                            }
+                        }
+
+                        Q6_Edit_detali_text.text = user.q6_2
+                        Q7_edit_text.setText(user.q7)
+
+                    }
+
+                }
+            }
+
+            override fun onCancelled(p0: DatabaseError) {
+
+            }
+        })
     }
 
     fun ReadQuetion(quetion: Quetion){
