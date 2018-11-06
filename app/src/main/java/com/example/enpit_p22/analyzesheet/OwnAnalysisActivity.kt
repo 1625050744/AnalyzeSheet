@@ -26,7 +26,10 @@ class OwnAnalysisActivity : AppCompatActivity() {
         setContentView(R.layout.activity_own_analysis)
         setSupportActionBar(toolbar)
 
-        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
+        this.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
+
+        setToplabel()
+
         fetchuser()
         Q2_spinner.onItemSelectedListener =
                 object : AdapterView.OnItemSelectedListener{
@@ -44,7 +47,7 @@ class OwnAnalysisActivity : AppCompatActivity() {
                 }
 
 
-        save_button.setOnClickListener {
+        save_button.setOnClickListener{
 
 
             Toast.makeText(this,"保存しました。",Toast.LENGTH_LONG).show()
@@ -54,179 +57,87 @@ class OwnAnalysisActivity : AppCompatActivity() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean
+    {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
-            R.id.action_settings -> true
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
-    private fun writeNewQetion(){
-        val q1:String
-        val q2_1:String
-        val q2_2:Int
-        val q3:String
-        val q4:Int
-        val q5:Int
-        val q6_1:Int
-        val q6_2:String
-        val q7:String
-
-        q1 = if(Q1_edit_num.text == null){
-            ""
-        }else{
-            Q1_edit_num.text.toString()
-        }
-
-        q2_1 = if (Q2_edit_num.text == null){
-            ""
-        }else{
-            Q2_edit_num.text.toString()
-        }
-
-        q2_2 = Q2_spinner.selectedItemPosition
-
-        q3 = if (Q3_edit_num.text == null) {
-            ""
-        }else {
-            Q3_edit_num.text.toString()
-        }
-
-        q4 = when {
+    private fun writeNewQetion()
+    {
+        val q1:String = Q1_edit_num.text.toString()
+        val q2_1:String = Q2_edit_num.text.toString()
+        val q2_2:Int = Q2_spinner.selectedItemPosition
+        val q3:String = Q3_edit_num.text.toString()
+        val q4:Int = when {
             Q4_noButtom.isChecked -> 0
             Q4_yesButtom.isChecked -> 1
             else -> 3
         }
-
-        q5 = when {
+        val q5:Int = when {
             Q5_noButtom.isChecked -> 0
             Q5_yesButtom.isChecked -> 1
             else -> 3
         }
-
-        q6_1 = when {
+        val q6_1:Int = when {
             Q6_noButtom.isChecked -> 0
             Q6_yesButtom.isChecked -> 1
             else -> 3
         }
+        val q6_2:String =Q6_edit_detail.text.toString()
+        val q7:String = Q7_edit_text.text.toString()
 
-        q6_2 = if (Q6_edit_detail.text == null){
-            ""
-        }else{
-            Q6_edit_detail.text.toString()
-        }
-
-        q7 = if(Q7_edit_text.text == null){
-            ""
-        }else{
-            Q7_edit_text.text.toString()
-        }
-
+        //データベースに保存
         var quetion = Quetion(q1,q2_1,q2_2,q3,q4,q5,q6_1,q6_2,q7)
         mDatabase.setValue(quetion)
 
     }
 
-    private fun getLatestAns(time:String){
-        mDatabase.addChildEventListener(object: ChildEventListener{
-            override fun onCancelled(p0: DatabaseError) {}
-
-            override fun onChildMoved(p0: DataSnapshot, p1: String?) {}
-
-            override fun onChildChanged(p0: DataSnapshot, p1: String?) {}
-
-            override fun onChildAdded(dataSnapshot: DataSnapshot, prevChildKey: String?) {
-                val add_quetion = dataSnapshot.getValue<Quetion>(Quetion::class.java)
-                ReadQuetion(add_quetion!!)
-            }
-
-            override fun onChildRemoved(p0: DataSnapshot) {
-            }
-
-        })
-
-    }
-    private fun fetchuser(){
-        val ref = FirebaseDatabase.getInstance().getReference()?.child("/AnalyzeSheet")
-        ref.addListenerForSingleValueEvent(object :ValueEventListener{
-            override fun onDataChange(p0: DataSnapshot) {
+    private fun fetchuser()
+    {
+        val ref = FirebaseDatabase.getInstance().reference.child("/AnalyzeSheet")
+        ref.addListenerForSingleValueEvent(object :ValueEventListener
+        {
+            override fun onDataChange(p0: DataSnapshot)
+            {
                 Log.d("Main","実行")
                 for(data in p0.children)
                 {
                     val userdata = data.getValue<Quetion>(Quetion::class.java)
-                    val user = userdata?.let { it } ?:continue
-                    if(user.userId.toString() == FirebaseAuth.getInstance().uid.toString()){
-                        Log.d("Main","jikko")
-                        Q1_edit_num.setText(user.q1)
-                        Q2_edit_num.setText(user.q2_1)
-                        Q2_spinner.setSelection(user.q2_2!!)
-                        Q3_edit_num.setText(user.q3)
-                        when {
-                            user.q4 == 0 -> {
-                                Q4_yesButtom.isChecked = false
-                                Q4_noButtom.isChecked = true
-                            }
-                            user.q4 == 1 -> {
-                                Q4_yesButtom.isChecked = true
-                                Q4_noButtom.isChecked = false
-                            }
-                            else -> {
-                                Q4_yesButtom.isChecked = false
-                                Q4_noButtom.isChecked = false
-                            }
-                        }
-
-                        when {
-                                user.q5 == 0 -> {
-                                Q5_yesButtom.isChecked = false
-                                Q5_noButtom.isChecked = true
-                            }
-                            user.q5 == 1 -> {
-                                Q5_yesButtom.isChecked = true
-                                Q5_noButtom.isChecked = false
-                            }
-                            else -> {
-                                Q5_yesButtom.isChecked = false
-                                Q5_noButtom.isChecked = false
-                            }
-                        }
-
-                        when {
-                            user.q6_1 == 0 -> {
-                                Q6_yesButtom.isChecked = false
-                                Q6_noButtom.isChecked = true
-                            }
-                            user.q6_1 == 1 -> {
-                                Q6_yesButtom.isChecked = true
-                                Q6_noButtom.isChecked = false
-                            }
-                            else -> {
-                                Q6_yesButtom.isChecked = false
-                                Q6_noButtom.isChecked = false
-                            }
-                        }
-
-                        Q6_Edit_detali_text.text = user.q6_2
-                        Q7_edit_text.setText(user.q7)
-
+                    val read_quetion = userdata?.let { it } ?:continue
+                    if(read_quetion.userId.toString() == FirebaseAuth.getInstance().uid.toString()) {
+                       ReadQuetion(read_quetion)
                     }
 
                 }
             }
-
-            override fun onCancelled(p0: DatabaseError) {
-
-            }
+            override fun onCancelled(p0: DatabaseError) {}
         })
+    }
+
+    private fun setToplabel(): String? {
+        val ref = FirebaseDatabase.getInstance().reference.child("/User")
+        var uname:String? = "4"
+        ref.addListenerForSingleValueEvent(object :ValueEventListener
+        {
+            override fun onDataChange(p0: DataSnapshot)
+            {
+
+                for(data in p0.children)
+                {
+                    val userdata = data.getValue<User>(User::class.java)
+                    val users = userdata?.let { it } ?:continue
+                    if(users.userId.toString() == FirebaseAuth.getInstance().uid.toString()) {
+                        Label.text = users.username + " さんの分析シート"
+                    }
+                }
+            }
+            override fun onCancelled(p0: DatabaseError) {}
+        })
+
+        Log.d("Uname",uname)
+        return uname.toString()
     }
 
     fun ReadQuetion(quetion: Quetion){
